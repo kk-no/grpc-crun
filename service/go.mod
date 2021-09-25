@@ -3,6 +3,7 @@ module github.com/kk-no/grpc-crun/service
 go 1.17
 
 require (
+	github.com/kelseyhightower/envconfig v1.4.0
 	github.com/kk-no/proto-terminal v0.0.0-20210923095255-885858a5fb50
 	google.golang.org/grpc v1.40.0
 )

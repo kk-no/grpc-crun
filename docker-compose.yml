@@ -1,0 +1,29 @@
+version: "3.8"
+
+services:
+  gateway:
+    build:
+      context: ./gateway
+      dockerfile: Dockerfile
+    container_name: gateway
+    environment:
+      SERVICE_DOMAIN: service
+      SERVICE_PORT: 8080
+    ports:
+      - "8000:8000"
+    platform: linux/amd64
+    networks:
+      - rpc
+  service:
+    build:
+      context: ./service
+      dockerfile: Dockerfile
+    container_name: service
+    ports:
+      - "8080:8080"
+    platform: linux/amd64
+    networks:
+      - rpc
+
+networks:
+  rpc:

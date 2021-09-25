@@ -4,6 +4,7 @@ go 1.17
 
 require (
 	github.com/grpc-ecosystem/grpc-gateway v1.16.0
+	github.com/kelseyhightower/envconfig v1.4.0
 	github.com/kk-no/proto-terminal v0.0.0-20210923081140-e8f70526e6ee
 	google.golang.org/grpc v1.40.0
 )

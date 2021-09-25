@@ -1,1 +1,23 @@
 version: 2.1
+
+executors:
+  go:
+    working_directory: ~/app
+    docker:
+      - image: cimg/go:1.17
+    resource_class: small
+
+jobs:
+  setup:
+    executor: go
+    steps:
+      - checkout
+      - run:
+          name: echo
+          command: echo "Checkout success"
+
+workflows:
+  version: 2
+  run:
+    jobs:
+      - setup

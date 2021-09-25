@@ -2,14 +2,12 @@ package main
 
 import (
 	"context"
-	"fmt"
+	"github.com/kk-no/grpc-crun/gateway/endpoint"
 	"log"
 	"net/http"
 
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
 	"github.com/kk-no/grpc-crun/gateway/config"
-	sample "github.com/kk-no/proto-terminal/sample/v1"
-	"google.golang.org/grpc"
 )
 
 func main() {
@@ -28,10 +26,7 @@ func run(ctx context.Context) error {
 	conf := config.Conf
 
 	mux := runtime.NewServeMux()
-	opts := []grpc.DialOption{grpc.WithInsecure()}
-
-	endpoint := fmt.Sprintf("%s:%s", conf.ServiceDomain, conf.ServicePort)
-	if err := sample.RegisterSampleServiceHandlerFromEndpoint(ctx, mux, endpoint, opts); err != nil {
+	if err := endpoint.Set(ctx, mux); err != nil {
 		return err
 	}
 

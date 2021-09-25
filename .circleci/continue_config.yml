@@ -1,0 +1,39 @@
+version: 2.1
+
+parameters:
+  run-build-gateway-job:
+    type: boolean
+    default: false
+  run-build-service-job:
+    type: boolean
+    default: false
+
+executors:
+  go:
+    working_directory: ~/app
+    docker:
+      - image: cimg/go:1.17
+    resource_class: small
+
+jobs:
+  setup:
+    executor: go
+    steps:
+      - checkout
+      - run:
+          name: "Checkout job"
+          command: echo "Checkout success"
+
+workflows:
+  gateway:
+    when: << pipeline.parameters.run-build-gateway-job >>
+    jobs:
+      - run:
+        name: "Gateway build job"
+        command: echo "Building gateway"
+  service:
+    when: << pipeline.parameters.run-build-service-job >>
+    jobs:
+      - run:
+        name: "Service build job"
+        command: echo "Building service"

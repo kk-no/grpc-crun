@@ -1,23 +1,17 @@
 version: 2.1
 
-executors:
-  go:
-    working_directory: ~/app
-    docker:
-      - image: cimg/go:1.17
-    resource_class: small
+setup: true
 
-jobs:
-  setup:
-    executor: go
-    steps:
-      - checkout
-      - run:
-          name: echo
-          command: echo "Checkout success"
+orbs:
+  path-filtering: circleci/path-filtering@0.0.3
 
 workflows:
-  version: 2
-  run:
+  always-run:
     jobs:
-      - setup
+      - path-filtering/filter:
+          name: check-updated-files
+          mapping: |
+            gateway/.* run-build-gateway-job true
+            service/.* run-build-service-job true
+          base-revision: main
+          config-path: .circleci/continue_config.yml

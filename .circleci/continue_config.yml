@@ -16,24 +16,25 @@ executors:
     resource_class: small
 
 jobs:
-  setup:
+  build-gateway:
     executor: go
     steps:
-      - checkout
-      - run:
-          name: "Checkout job"
-          command: echo "Checkout success"
+      - run: go version
+      - run: ls -la
+
+  build-service:
+    executor: go
+    steps:
+      - run: go version
+      - run: ls -la
 
 workflows:
   gateway:
     when: << pipeline.parameters.run-build-gateway-job >>
     jobs:
-      - run:
-        name: "Gateway build job"
-        command: echo "Building gateway"
+      - build-gateway
+
   service:
     when: << pipeline.parameters.run-build-service-job >>
     jobs:
-      - run:
-        name: "Service build job"
-        command: echo "Building service"
+      - build-service

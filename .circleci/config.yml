@@ -13,5 +13,5 @@ workflows:
           mapping: |
             gateway/.* run-build-gateway-job true
             service/.* run-build-service-job true
-          base-revision: main
+          base-revision: development
           config-path: .circleci/continue_config.yml
